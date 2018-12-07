@@ -20,9 +20,10 @@ SCORING_FILE_NAME = "TravelPrediction/travel_scoring_data.csv"
 
 ### NEEDS TO BE UPDATED ####
 # KEYSPACE = "6342e8556afc53a04c855f44"
-with open("../metis.config.yml", "r") as infile:
-    yml = infile.read()
-KEYSPACE = yml.split("\n")[0].split(":")[-1].strip()
+KEYSPACE = "f06b460dd6e7b7cad8160ab4"
+#with open("../metis.config.yml", "r") as infile:
+#    yml = infile.read()
+#KEYSPACE = yml.split("\n")[0].split(":")[-1].strip()
 
 #-------------------Data Access Functions -----------------------
 
