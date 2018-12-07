@@ -1,0 +1,13 @@
+project_token: f06b460dd6e7b7cad8160ab4
+name: travel-predictorII
+jobs:
+  - job_id: ead56c88-119b-410c-b227-11f53cd8eaf4
+    language: python
+    name: build-travel-prediction-model
+    entrypoint: "build-travel-prediction-model.py"
+  - job_id: 0ef4915a-fca8-4c2d-aa6b-b2bce767e1b1
+    language: python
+    name: score-travelers
+    entrypoint: "score-travelers.py"
+    dependencies: ["ead56c88-119b-410c-b227-11f53cd8eaf4"]
+
