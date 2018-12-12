@@ -1,11 +1,11 @@
-## File of helper functions for handling data. Copied from various common modules. 
+## File of helper functions for handling data. Copied from various common modules.
 
 import os
 import pandas as pd
 import pickle
 import logging
 from skafossdk import DataSourceType, Skafos
-from s3fs.core import S3FileSystem  
+from s3fs.core import S3FileSystem
 from .schema import SCORING_SCHEMA, METRIC_SCHEMA
 
 
@@ -16,26 +16,17 @@ S3_BUCKET = "skafos.example.data"
 TRAINING_FILE_NAME = "TravelPrediction/travel_training_data.csv"
 SCORING_FILE_NAME = "TravelPrediction/travel_scoring_data.csv"
 
-# Project keyspace
-
-### NEEDS TO BE UPDATED ####
-# KEYSPACE = "6342e8556afc53a04c855f44"
-KEYSPACE = "f06b460dd6e7b7cad8160ab4"
-#with open("../metis.config.yml", "r") as infile:
-#    yml = infile.read()
-#KEYSPACE = yml.split("\n")[0].split(":")[-1].strip()
-
 #-------------------Data Access Functions -----------------------
 
-# Get input data from S3 -- specify training or scoring. 
-def get_data(csvCols, whichData):  
+# Get input data from S3 -- specify training or scoring.
+def get_data(csvCols, whichData):
     s3 = S3FileSystem(anon=True)
     if whichData == "training":
         path = f's3://{S3_BUCKET}/{TRAINING_FILE_NAME}'
     elif whichData == "scoring":
         path = f's3://{S3_BUCKET}/{SCORING_FILE_NAME}'
     # PUT ERROR CATCHING HERE FOR ERRORS IN INPUT FILES
-    # Read in .csv file, but only for specified columns. 
+    # Read in .csv file, but only for specified columns.
     df = pd.read_csv(s3.open(f'{path}', mode='rb'), usecols=csvCols)
     for c in csvCols:
         if (df[c].dtype == 'object'):
@@ -54,12 +45,11 @@ def save_data(ska, data, schema):
     #Save to Cassandra
     ska.log("Saving to Cassandra", level=logging.INFO)
     ska.engine.save(schema, dataToWrite).result()
-    
+
 # Access metrics from Cassandra for plotting
 def get_metrics(ska):
     view = "model_metrics"
     table_options = {
-            "keyspace": KEYSPACE,
             "table": "model_metrics"
             }
     data_source = DataSourceType.Cassandra

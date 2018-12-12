@@ -1,5 +1,5 @@
 # Schema for grabbing columns and putting into Cassandra
-    
+
 SCORING_SCHEMA = {
     "table_name": "model_scores",
     "options": {
@@ -21,11 +21,7 @@ METRIC_SCHEMA = {
         "model_id": "bigint",
         "run_time": "timestamp",
         "accuracy": "float",
-        "pct_zeros": "float", 
+        "pct_zeros": "float",
         "pct_ones": "float"
     }
 }
-    
-
-    
-    
